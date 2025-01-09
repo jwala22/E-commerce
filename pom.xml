@@ -52,5 +52,20 @@
             </plugin>
         </plugins>
     </build>
+
+    <!-- Distribution Management: To back up artifacts to Nexus -->
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>Nexus Releases</name>
+            <url>http://<your-nexus-url>/repository/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Nexus Snapshots</name>
+            <url>http://<your-nexus-url>/repository/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>
 
