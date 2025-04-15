@@ -9,18 +9,16 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <!-- Updated Properties for Java 21 and UTF-8 Encoding -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <maven.compiler.release>21</maven.compiler.release> <!-- Ensures bytecode compatibility -->
+        <maven.compiler.release>21</maven.compiler.release>
     </properties>
 
     <dependencies>
-        <!-- Add your dependencies here (e.g., Jakarta EE, Spring Boot, etc.) -->
-        <!-- Example for Jakarta Servlet API (required for WAR projects) -->
+        <!-- Example: Jakarta Servlet API (required for WAR) -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
@@ -30,60 +28,36 @@
     </dependencies>
 
     <build>
+        <!-- Use finalName to set the output WAR filename -->
+        <finalName>zito</finalName>
+
         <plugins>
-            <!-- Updated Maven Compiler Plugin (supports Java 21) -->
+            <!-- Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <release>21</release> <!-- Modern alternative to <source>/<target> -->
+                    <release>21</release>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
 
-            <!-- Updated Maven War Plugin -->
+            <!-- Maven War Plugin (fixed configuration) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.4.0</version>
                 <configuration>
-                    <warName>zito</warName>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <webResources>
-                        <resource>
-                            <directory>${project.basedir}/src/main/webapp</directory>
-                        </resource>
-                    </webResources>
+                    <!-- No need for <warName> or <webResources> unless customizing -->
                 </configuration>
-            </plugin>
-
-            <!-- Ensure Maven runs with Java 21 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.3.0</version>
-                <executions>
-                    <execution>
-                        <id>enforce-java</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <requireJavaVersion>
-                                    <version>21</version>
-                                </requireJavaVersion>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
 
-    <!-- Distribution Management (Update Nexus URL) -->
+    <!-- Distribution Management (update URLs) -->
     <distributionManagement>
         <repository>
             <id>nexus-releases</id>
