@@ -9,16 +9,17 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
+    <!-- Updated properties for Java 21 -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.release>21</maven.compiler.release>  <!-- Ensures bytecode compatibility -->
     </properties>
 
+    <!-- Dependencies (updated to Jakarta EE 10 if needed) -->
     <dependencies>
-        <!-- Example: Jakarta Servlet API (required for WAR) -->
+        <!-- Example: Jakarta Servlet API (modern replacement for javax.servlet) -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
@@ -28,36 +29,38 @@
     </dependencies>
 
     <build>
-        <!-- Use finalName to set the output WAR filename -->
+        <!-- Final name replaces warName (better practice) -->
         <finalName>zito</finalName>
 
         <plugins>
-            <!-- Maven Compiler Plugin -->
+            <!-- Updated Maven Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <release>21</release>
-                    <showWarnings>true</showWarnings>
-                    <showDeprecation>true</showDeprecation>
+                    <release>21</release>  <!-- Modern alternative to source/target -->
                 </configuration>
             </plugin>
 
-            <!-- Maven War Plugin (fixed configuration) -->
+            <!-- Maven War Plugin (keeping your working config) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>3.3.2</version>  <!-- Last stable before 4.0 -->
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <!-- No need for <warName> or <webResources> unless customizing -->
+                    <webResources>
+                        <resource>
+                            <directory>${project.basedir}/src/main/webapp</directory>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 
-    <!-- Distribution Management (update URLs) -->
+    <!-- Distribution Management (unchanged) -->
     <distributionManagement>
         <repository>
             <id>nexus-releases</id>
