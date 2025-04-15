@@ -4,42 +4,50 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- GroupId, ArtifactId, Version, and Packaging -->
     <groupId>com.example</groupId>
     <artifactId>your-web-app</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <!-- Properties for Maven Compiler -->
+    <!-- Updated Properties for Java 21 and UTF-8 Encoding -->
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release> <!-- Ensures bytecode compatibility -->
     </properties>
 
-    <!-- Dependencies (empty for now, add if needed) -->
     <dependencies>
-        <!-- Add your dependencies here -->
+        <!-- Add your dependencies here (e.g., Jakarta EE, Spring Boot, etc.) -->
+        <!-- Example for Jakarta Servlet API (required for WAR projects) -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
-    <!-- Build Configuration -->
     <build>
         <plugins>
-            <!-- Maven Compiler Plugin -->
+            <!-- Updated Maven Compiler Plugin (supports Java 21) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.11.0</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <release>21</release> <!-- Modern alternative to <source>/<target> -->
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
 
-            <!-- Maven War Plugin -->
+            <!-- Updated Maven War Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>3.4.0</version>
                 <configuration>
                     <warName>zito</warName>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
@@ -50,22 +58,42 @@
                     </webResources>
                 </configuration>
             </plugin>
+
+            <!-- Ensure Maven runs with Java 21 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>enforce-java</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>21</version>
+                                </requireJavaVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
-    <!-- Distribution Management: To back up artifacts to Nexus -->
+    <!-- Distribution Management (Update Nexus URL) -->
     <distributionManagement>
         <repository>
             <id>nexus-releases</id>
             <name>Nexus Releases</name>
-            <url>http://<your-nexus-url>/repository/releases/</url>
+            <url>http://your-nexus-server/repository/releases/</url>
         </repository>
         <snapshotRepository>
             <id>nexus-snapshots</id>
             <name>Nexus Snapshots</name>
-            <url>http://<your-nexus-url>/repository/snapshots/</url>
+            <url>http://your-nexus-server/repository/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
-
 </project>
-
